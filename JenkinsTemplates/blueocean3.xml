@@ -1,0 +1,61 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<flow-definition plugin="workflow-job@2.31">
+  <actions/>
+  <description>An example <:PROJECT:> to see Jenkins Pipelines in action</description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <jenkins.plugins.office365connector.WebhookJobProperty plugin="Office-365-Connector@4.5">
+      <webhooks>
+        <jenkins.plugins.office365connector.Webhook>
+          <name>MS Teams</name>
+          <url>https://outlook.office.com/webhook/543299a8-9829-4f85-8af7-da4a4da93134@a7f35688-9c00-4d5e-ba41-29f146377ab0/IncomingWebhook/de5edbf54c8943c693291233fb8314a4/189f02ed-8c3d-41f9-af2e-e7aff6a7eeb0</url>
+          <startNotification>true</startNotification>
+          <notifySuccess>true</notifySuccess>
+          <notifyAborted>false</notifyAborted>
+          <notifyNotBuilt>false</notifyNotBuilt>
+          <notifyUnstable>true</notifyUnstable>
+          <notifyFailure>true</notifyFailure>
+          <notifyBackToNormal>true</notifyBackToNormal>
+          <notifyRepeatedFailure>false</notifyRepeatedFailure>
+          <timeout>30000</timeout>
+          <macros class="empty-list"/>
+        </jenkins.plugins.office365connector.Webhook>
+      </webhooks>
+    </jenkins.plugins.office365connector.WebhookJobProperty>
+    <org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
+      <triggers>
+        <hudson.triggers.SCMTrigger>
+          <spec></spec>
+          <ignorePostCommitHooks>false</ignorePostCommitHooks>
+        </hudson.triggers.SCMTrigger>
+      </triggers>
+    </org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
+  </properties>
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.61.1">
+    <script>node {
+  stage (&apos;GIT Test Project Checkout&apos;){
+    git &apos;<:GIT-REPO:>&apos;
+    office365ConnectorSend message: &quot;Pipeline Stage Chekcout&quot;
+  }
+  
+  stage (&apos;Testing&apos;){
+    echo &quot;Start Testing <:PROJECT:>&quot;
+     office365ConnectorSend message: &quot;Pipeline Stage Testing&quot;
+  }
+  
+  stage (&apos;Approval&apos;){
+      office365ConnectorSend message: &quot;Approval Stage&quot;
+    echo &quot;Approval  <:EMAILLIST:> &quot;
+  }
+  
+  stage (&apos;Deployed&apos;){
+      office365ConnectorSend message: &quot;Deploy Stage&quot;
+      echo &quot;Deploy Completed <:USER:>&quot;
+  }
+}</script>
+    <sandbox>true</sandbox>
+  </definition>
+  <triggers/>
+  <authToken>XYZGES1234567890</authToken>
+  <disabled>false</disabled>
+</flow-definition>
