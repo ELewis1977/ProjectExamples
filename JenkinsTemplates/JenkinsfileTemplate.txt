@@ -1,0 +1,49 @@
+pipeline {
+	agent any
+	
+	environment {
+		GIT_REPO = <:GIT:REPO:>
+		PROJECT = <:PROJECT:>
+		EMAILLIST = <:EMAILLIST:>
+		USER = <:USER:>		
+	}
+	
+	//Wildcards should not be used after this point in the templace this should be Grovey code and should use the global environment varibables
+	stages {
+	  stage ('GIT Test Project Checkout'){
+		steps {
+			git "{env.GIT_REPO}"
+			office365ConnectorSend message: "{$env.STAGE_NAME}";
+		}
+	  }
+	  
+	  stage ('Testing'){
+		steps {
+			echo "Start Testing {env.PROJECT}"
+			office365ConnectorSend message: "{$env.STAGE_NAME}";
+		}
+	  }
+	  
+		
+	  stage ('Acceptance Testing'){
+		steps {
+			echo "Acceptance Testing "
+			office365ConnectorSend message: "{$env.STAGE_NAME}";
+		}
+	  }
+	  
+	  stage ('Approval'){
+		steps {
+			echo "Approval {$env.EMAILLIST}"
+			office365ConnectorSend message: "{$env.STAGE_NAME}";
+		}
+	  }
+	  
+	  stage ('Deployed'){
+		steps { 
+		  echo "Deploy Completed {$env.USER}"
+		  office365ConnectorSend message: "{$env.STAGE_NAME}";
+		 }
+	  }
+	}
+}
