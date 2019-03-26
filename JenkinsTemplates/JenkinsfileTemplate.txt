@@ -2,7 +2,7 @@ pipeline {
 	agent any
 	
 	environment {
-		GIT_REPO = <:GIT:REPO:>
+		GIT_REPO = <:GIT-REPO:>
 		PROJECT = <:PROJECT:>
 		EMAILLIST = <:EMAILLIST:>
 		USER = <:USER:>		

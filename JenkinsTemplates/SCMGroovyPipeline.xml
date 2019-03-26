@@ -11,7 +11,7 @@
       <configVersion>2</configVersion>
       <userRemoteConfigs>
         <hudson.plugins.git.UserRemoteConfig>
-          <url><:GIT_REPO:></url>
+          <url><:GIT-REPO:></url>
           <credentialsId>e4e438b4-42aa-498b-938b-d2656a92107a</credentialsId>
         </hudson.plugins.git.UserRemoteConfig>
       </userRemoteConfigs>
