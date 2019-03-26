@@ -13,15 +13,15 @@ pipeline {
 	stages {
 	  stage ('GIT Test Project Checkout'){
 		steps {
-			git "{env.GIT_REPO}"
-			office365ConnectorSend message: "{$env.STAGE_NAME}", webhookUrl: "{env.MSTEAM_WEBHOOK}";
+			git "{$env.GIT_REPO}"
+			office365ConnectorSend message: "{$env.STAGE_NAME}", webhookUrl: "{$env.MSTEAM_WEBHOOK}";
 		}
 	  }
 	  
 	  stage ('Testing'){
 		steps {
-			echo "Start Testing {env.PROJECT}"
-			office365ConnectorSend message: "{$env.STAGE_NAME}", webhookUrl: "{env.MSTEAM_WEBHOOK}";
+			echo "Start Testing {$env.PROJECT}"
+			office365ConnectorSend message: "{$env.STAGE_NAME}", webhookUrl: "{$env.MSTEAM_WEBHOOK}";
 		}
 	  }
 	  
@@ -29,21 +29,21 @@ pipeline {
 	  stage ('Acceptance Testing'){
 		steps {
 			echo "Acceptance Testing "
-			office365ConnectorSend message: "{$env.STAGE_NAME}", webhookUrl: "{env.MSTEAM_WEBHOOK}";
+			office365ConnectorSend message: "{$env.STAGE_NAME}", webhookUrl: "{$env.MSTEAM_WEBHOOK}";
 		}
 	  }
 	  
 	  stage ('Approval'){
 		steps {
 			echo "Approval {$env.EMAILLIST}"
-			office365ConnectorSend message: "{$env.STAGE_NAME}", webhookUrl: "{env.MSTEAM_WEBHOOK}";
+			office365ConnectorSend message: "{$env.STAGE_NAME}", webhookUrl: "{$env.MSTEAM_WEBHOOK}";
 		}
 	  }
 	  
 	  stage ('Deployed'){
 		steps { 
 		  echo "Deploy Completed {$env.USER}"
-		  office365ConnectorSend message: "{$env.STAGE_NAME}", webhookUrl: "{env.MSTEAM_WEBHOOK}";
+		  office365ConnectorSend message: "{$env.STAGE_NAME}", webhookUrl: "{$env.MSTEAM_WEBHOOK}";
 		 }
 	  }
 	}
